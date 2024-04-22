@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://br17ciqiitq6s"]
 
-[ext_resource type="Script" path="res://addons/playlists/updater2/download_update_panel.gd" id="1_dw0gc"]
-[ext_resource type="Script" path="res://addons/playlists/updater2/updater_http_client.gd" id="2_i6pkt"]
+[ext_resource type="Script" path="./download_update_panel.gd" id="1_dw0gc"]
+[ext_resource type="Script" path="./updater_http_client.gd" id="2_i6pkt"]
 
 [sub_resource type="Image" id="Image_mlan2"]
 data = {
