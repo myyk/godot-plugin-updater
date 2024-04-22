@@ -7,8 +7,16 @@ func _enter_tree():
 	var config = UpdaterConfig.get_repo_config()
 	_install_to_plugin(config.plugin_name)
 
+	# Add auto-update functionality for plugin_updater itself (not the plugin being updated, that needs similar code)
+	if Engine.is_editor_hint():
+		Engine.set_meta("PluginUpdaterEditorPlugin", self)
+		var update_tool: Node = load("res://addons/plugin_updater/generated/updater/download_update_panel.tscn").instantiate()
+		Engine.get_main_loop().root.call_deferred("add_child", update_tool)
+
 func _exit_tree():
-	pass
+	if Engine.has_meta("PluginUpdaterEditorPlugin"):
+		Engine.remove_meta("PluginUpdaterEditorPlugin")
+
 
 func _install_to_plugin(plugin_name: String):
 	var err: Error = OK

@@ -10,9 +10,10 @@ extends RefCounted
 
 const PLUGIN_MAKER_CONFIG_PATH = "res://plugin-updater.json"
 const PLUGIN_USER_CONFIG_PATH_FORMAT = "res://addons/%s/generated/updater/plugin-updater.json"
+const PLUGIN_USER_CONFIG_RELATIVE_PATH = "./plugin-updater.json"
 
-static func get_user_config(plugin_name: String) -> Dictionary:
-	return _get_config(PLUGIN_USER_CONFIG_PATH_FORMAT % plugin_name)
+static func get_user_config() -> Dictionary:
+	return _get_config(PLUGIN_USER_CONFIG_RELATIVE_PATH)
 
 static func get_repo_config() -> Dictionary:
 	return _get_config(PLUGIN_MAKER_CONFIG_PATH)
