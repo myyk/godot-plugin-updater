@@ -1,4 +1,3 @@
-class_name UpdaterSemVer
 extends RefCounted
 
 ## Credits: Copied from https://github.com/MikeSchulze/gdUnit4/blob/99b7c323f443e5fcc67f9a79b4df532727e8986f/addons/gdUnit4/src/core/GdUnit4Version.gd before edits.
@@ -16,7 +15,7 @@ func _init(major :int,minor :int,patch :int):
 	_patch = patch
 
 
-static func parse(value :String) -> UpdaterSemVer:
+static func parse(value :String):
 	var regex := RegEx.new()
 	regex.compile("[a-zA-Z:,-]+")
 	var cleaned := regex.sub(value, "", true)
@@ -24,7 +23,7 @@ static func parse(value :String) -> UpdaterSemVer:
 	var major := parts[0].to_int()
 	var minor := parts[1].to_int()
 	var patch := parts[2].to_int() if parts.size() > 2 else 0
-	return UpdaterSemVer.new(major, minor, patch)
+	return new(major, minor, patch)
 
 
 func equals(other :) -> bool:

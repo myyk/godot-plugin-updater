@@ -7,10 +7,11 @@ extends Window
 #TODO: read this from somewhere
 var config = UpdaterConfig.get_user_config()
 
-var spinner_icon = "res://addons/%s/updater2/spinner.tres" % config.plugin_name
+var spinner_icon = "res://addons/%s/generated/updater/spinner.tres" % config.plugin_name
 
 # Using this style of import avoids polluting user's namespaces
 const UpdaterConfig = preload("updater_config.gd")
+const SemVer = preload("updater_sem_ver.gd")
 const HttpClient = preload("updater_http_client.gd")
 const MarkDownReader = preload("updater_markdown_reader.gd")
 
@@ -81,14 +82,14 @@ func rescan() -> void:
 		await Engine.get_main_loop().process_frame
 	await Engine.get_main_loop().create_timer(1).timeout
 
-func extract_current_version() -> UpdaterSemVer:
+func extract_current_version() -> SemVer:
 	var config_file = ConfigFile.new()
 	config_file.load('addons/%s/plugin.cfg' % config.plugin_name)
-	return UpdaterSemVer.parse(config_file.get_value('plugin', 'version'))
+	return SemVer.parse(config_file.get_value('plugin', 'version'))
 
-static func extract_latest_version(response: HttpClient.HttpResponse) -> UpdaterSemVer:
+static func extract_latest_version(response: HttpClient.HttpResponse) -> SemVer:
 	var body :Array = response.response()
-	return UpdaterSemVer.parse(body[0]["name"])
+	return SemVer.parse(body[0]["name"])
 
 static func extract_zip_url(response: HttpClient.HttpResponse) -> String:
 	var body :Array = response.response()
@@ -98,7 +99,7 @@ func extract_releases(response: HttpClient.HttpResponse, current_version) -> Str
 	await get_tree().process_frame
 	var result := ""
 	for release in response.response():
-		if UpdaterSemVer.parse(release["tag_name"]).equals(current_version):
+		if SemVer.parse(release["tag_name"]).equals(current_version):
 			break
 		var release_description :String = release["body"]
 		result += await _md_reader.to_bbcode(release_description)
