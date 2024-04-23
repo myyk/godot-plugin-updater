@@ -26,6 +26,12 @@ The plugin installs the updater into your plugin under a folder it creates: `res
 
 This code must be supplied with your release.
 
+Note: do not edit code in `generated/` as it will get deleted and regenerated every time you open your plugin in Godot editor.
+
+You need to hook up a hidden updater window into your plugin that will be displayed when there's an update at start up.
+
+The plugin uses Github tags to know if there's an update by comparing your plugin's `plugin.cfg` version to the latest tag in your configured repo.
+
 ## Installation
 
 ### Create
