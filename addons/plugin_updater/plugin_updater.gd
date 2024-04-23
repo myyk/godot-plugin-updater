@@ -54,7 +54,7 @@ func _recursive_copy(from: String, to: String, chmod_flags: int = -1) -> Error:
 				print("Copying directory: " + file_name)
 				if !to_dir.dir_exists(file_name):
 					to_dir.make_dir(file_name)
-				var err = _recursive_copy(from+file_name, to+file_name)
+				var err = _recursive_copy(from+file_name+"/", to+file_name+"/")
 				if err != OK:
 					return err
 			else:
