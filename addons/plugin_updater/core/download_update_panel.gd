@@ -4,6 +4,8 @@ extends Window
 ## Updater heaviliy inspired by GDUnit4's updater, but decoupled completely from GDUnit. Also did not
 ## include all the patching that included since it seemed to complicated to include for most projects.
 
+signal updated
+
 var config = UpdaterConfig.get_user_config()
 
 var spinner_icon = "res://addons/%s/generated/updater/spinner.tres" % config.plugin_name
@@ -174,6 +176,8 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 
 	zip_reader.close()
 	DirAccess.remove_absolute(TEMP_FILE_NAME)
+
+	updated.emit()
 
 	#TODO: Show that we successfully updated
 
