@@ -74,6 +74,12 @@ In your main plugin script that extends `EditorPlugin` you need to add the updat
         if Engine.has_meta("YourEditorPlugin"):
             Engine.remove_meta("YourEditorPlugin")
 
+## Example Installations
+
+I was motivated to add this mainly to support my other plugins. You can see how it's integrated here if you need a working example.
+
+* https://github.com/myyk/godot-playlists/
+
 ## plugin-updater.json
 
 ### Parameters
@@ -102,12 +108,6 @@ The amount of time after editor startup before the plugin check for updates.
 
 Optional, Type: Float, Default: 5
 
-## Special Thanks
-
-This project heavily borrowed code and design from [MikeSchulze/gdUnit4](https://github.com/MikeSchulze/gdUnit4). Thank you for you're awesome testing tool!
-
-There was more code taken from [nathanhoad/godot_dialogue_manager](https://github.com/nathanhoad/godot_dialogue_manager) and his video https://www.youtube.com/watch?v=oepTYOMoMmc explaining how to build that was helpful too! This is also a great plugin to check out for Character Dialogs!
-
 ## Requirements
 
 * Your project is in a public Github repo.
@@ -115,6 +115,22 @@ There was more code taken from [nathanhoad/godot_dialogue_manager](https://githu
 * You use Semantic Versioning tags like: v1.2.3.
 
 * Godot Plugin Updater **requires at least Godot 4.0**.
+
+## Future Work
+
+* It would be nice to have a nicer looking UI.
+
+* Automated testing, this wasn't easy to test with all the projects involved.
+
+* Allow users to pausing updates.
+
+* Please add suggestions as Issues and solutions as Pull Requests!
+
+## Special Thanks
+
+This project heavily borrowed code and design from [MikeSchulze/gdUnit4](https://github.com/MikeSchulze/gdUnit4). Thank you for you're awesome testing tool!
+
+There was more code taken from [nathanhoad/godot_dialogue_manager](https://github.com/nathanhoad/godot_dialogue_manager) and his video https://www.youtube.com/watch?v=oepTYOMoMmc explaining how to build that was helpful too! This is also a great plugin to check out for Character Dialogs!
 
 ## License
 This project is licensed under the terms of the [MIT license](https://github.com/myyk/godot-plugin-updater/blob/main/LICENSE).
