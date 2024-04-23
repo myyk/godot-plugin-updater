@@ -1,5 +1,8 @@
 extends RefCounted
 
+const UpdaterConfig = preload("updater_config.gd")
+var config = UpdaterConfig.get_user_config()
+
 const FONT_H1 := 32
 const FONT_H2 := 28
 const FONT_H3 := 24
@@ -7,11 +10,11 @@ const FONT_H4 := 20
 const FONT_H5 := 16
 const FONT_H6 := 12
 
-const HORIZONTAL_RULE := "[img=4000x2]res://addons/gdUnit4/src/update/assets/horizontal-line2.png[/img]\n"
+var HORIZONTAL_RULE: String = "[img=4000x2]res://addons/%s/generated/updater/assets/horizontal-line2.png[/img]\n" % config.plugin_name
 const HEADER_RULE := "[font_size=%d]$1[/font_size]\n"
 const HEADER_CENTERED_RULE := "[font_size=%d][center]$1[/center][/font_size]\n"
 
-const image_download_folder := "res://addons/gdUnit4/tmp-update/"
+const image_download_folder := "res://cached/updater/"
 
 const exclude_font_size := "\b(?!(?:(font_size))\b)"
 
@@ -58,7 +61,7 @@ var md_replace_patterns := [
 	[regex("([!]|)\\[(.+)\\]\\(([^ ]+?)( \"(.+)\")?\\)"),  "[url={\"url\":\"$3\", \"tool_tip\":\"$5\"}]$2[/url]"],
 
 	# embeded text
-	[regex("(?m)^[ ]{0,3}>(.*?)$"), "[img=50x14]res://addons/gdUnit4/src/update/assets/embedded.png[/img][i]$1[/i]"],
+	[regex("(?m)^[ ]{0,3}>(.*?)$"), "[img=50x14]res://addons/%s/generated/updater/assets/embedded.png[/img][i]$1[/i]" % config.plugin_name],
 
 	# italic + bold font
 	[regex("[_]{3}(.*?)[_]{3}"), "[i][b]$1[/b][/i]"],
@@ -123,7 +126,7 @@ func _notification(what):
 
 
 func list_replace(indent :int) -> String:
-	var replace_pattern := "[img=12x12]res://addons/gdUnit4/src/update/assets/dot2.png[/img]" if indent %2 else "[img=12x12]res://addons/gdUnit4/src/update/assets/dot1.png[/img]"
+	var replace_pattern: String = ("[img=12x12]res://addons/%s/generated/updater/assets/dot2.png[/img]" % config.plugin_name) if indent %2 else ("[img=12x12]res://addons/%s/generated/updater/assets/dot1.png[/img]" % config.plugin_name)
 	replace_pattern += " $1"
 
 	for index in indent:
@@ -134,9 +137,9 @@ func list_replace(indent :int) -> String:
 func code_block(replace :String, border :bool = false) -> String:
 	var cb := "[code][color=aqua][font_size=16]%s[/font_size][/color][/code]" % replace
 	if border:
-		return "[img=1400x14]res://addons/gdUnit4/src/update/assets/border_top.png[/img]"\
+		return ("[img=1400x14]res://addons/%s/generated/updater/assets/border_top.png[/img]" % config.plugin_name)\
 			+ "[indent]" + cb + "[/indent]"\
-			+ "[img=1400x14]res://addons/gdUnit4/src/update/assets/border_bottom.png[/img]\n"
+			+ ("[img=1400x14]res://addons/%s/generated/updater/assets/border_bottom.png[/img]\n" % config.plugin_name)
 	return cb
 
 
