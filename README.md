@@ -32,6 +32,13 @@ You need to hook up a hidden updater window into your plugin that will be displa
 
 The plugin uses Github tags to know if there's an update by comparing your plugin's `plugin.cfg` version to the latest tag in your configured repo.
 
+## When not to use this?
+
+Some reasons you might not want to use this:
+
+* If you expect users will modifications to your plugin or any other data in your `res://addons/your-plugin` directory. These will be obliterated on updates without prompt.
+* Your plugin needs more than a simple delete/replace operation.
+
 ## Installation
 
 ### Create
