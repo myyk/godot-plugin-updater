@@ -4,7 +4,6 @@ extends Window
 ## Updater heaviliy inspired by GDUnit4's updater, but decoupled completely from GDUnit. Also did not
 ## include all the patching that included since it seemed to complicated to include for most projects.
 
-#TODO: read this from somewhere
 var config = UpdaterConfig.get_user_config()
 
 var spinner_icon = "res://addons/%s/generated/updater/spinner.tres" % config.plugin_name
@@ -29,6 +28,7 @@ func _ready():
 	hide()
 	_http_client.github_repo = config.github_repo
 	
+	title = "%s Plugin Update" % config.plugin_name
 	var plugin :EditorPlugin = Engine.get_meta(config.editor_plugin_meta)
 	
 	# wait a bit to allow the editor to initialize itself
@@ -43,7 +43,7 @@ func _check_for_updater():
 		return
 	var latest_version := extract_latest_version(response)
 	var current_version := extract_current_version()
-	
+
 	# if same version exit here no update need
 	if latest_version.is_greater(current_version):
 		_download_zip_url = extract_zip_url(response)

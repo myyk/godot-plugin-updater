@@ -2,6 +2,7 @@
 extends EditorPlugin
 
 const UpdaterConfig = preload("res://addons/plugin_updater/core/updater_config.gd")
+const DEBUG_MODE = false
 
 func _enter_tree():
 	var config = UpdaterConfig.get_repo_config()
@@ -51,14 +52,16 @@ func _recursive_copy(from: String, to: String, chmod_flags: int = -1) -> Error:
 		var file_name = from_dir.get_next()
 		while file_name != "":
 			if from_dir.current_is_dir():
-				print("Copying directory: " + file_name)
+				if DEBUG_MODE:
+					print("Copying directory: " + file_name)
 				if !to_dir.dir_exists(file_name):
 					to_dir.make_dir(file_name)
 				var err = _recursive_copy(from+file_name+"/", to+file_name+"/")
 				if err != OK:
 					return err
 			else:
-				print("Copying file: %s -> %s" % [from+file_name, to+file_name])
+				if DEBUG_MODE:
+					print("Copying file: %s -> %s" % [from+file_name, to+file_name])
 				var err = DirAccess.copy_absolute(from+file_name, to+file_name)
 				if err != OK:
 					return err
