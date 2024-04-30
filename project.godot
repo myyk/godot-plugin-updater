@@ -16,7 +16,7 @@ config/icon="res://icon.jpg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/plugin_updater/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/plugin_updater/plugin.cfg")
 
 [rendering]
 
