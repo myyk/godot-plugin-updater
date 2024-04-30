@@ -48,9 +48,10 @@ func _check_for_updater():
 	var current_version := extract_current_version()
 
 	# if the current version is less than or equal to the skip version, skip the update
-	if "ignore_updates_before_version" in config:
-		var skip_version = SemVer.parse(config.ignore_updates_before_version)
-		if current_version.is_less_than(skip_version) or current_version.equals(skip_version):
+	var skip_config = UpdaterConfig.get_skip_config()
+	if config.plugin_name in skip_config:
+		var skip_version: SemVer = SemVer.parse(skip_config[config.plugin_name])
+		if !_latest_version.is_greater(skip_version):
 			return
 
 	# if same version exit here no update need
@@ -135,9 +136,10 @@ func _colored(message :String, color :Color) -> String:
 
 func _skip_update():
 	# Store a setting in the config.
-	config.ignore_updates_before_version = str(_latest_version)
+	var skip_config = UpdaterConfig.get_skip_config() # Read this again in case it was changed
+	skip_config[config.plugin_name] = str(_latest_version)
 	# Write the config into the addons dir so it gets removed on update
-	UpdaterConfig.save_user_config(config)
+	UpdaterConfig.save_skip_config(skip_config)
 
 func _on_update_pressed():
 	hide()
