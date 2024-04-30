@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/github/license/myyk/godot-plugin-updater)](https://github.com/myyk/godot-plugin-updater/blob/main/LICENSE)
 [![GitHub release badge](https://badgen.net/github/release/myyk/godot-plugin-updater/stable)](https://github.com/myyk/godot-plugin-updater/releases/latest)
+[![CI/CD](https://github.com/myyk/godot-plugin-updater/actions/workflows/ci.yml/badge.svg)](https://github.com/myyk/godot-plugin-updater/actions/workflows/ci.yml)
 
 Godot Plugin Updater a Godot plugin for Godot plugin makers to give their plugins an easy in-editor updating. 
 
