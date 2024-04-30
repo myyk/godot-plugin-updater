@@ -1,6 +1,5 @@
 # Project specific ignores
 icon.jpg.import
-**/generated/updater/assets/*.import
 
 # Godot 4+ specific ignores
 .godot/
