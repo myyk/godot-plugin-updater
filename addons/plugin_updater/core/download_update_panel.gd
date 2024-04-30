@@ -24,6 +24,7 @@ const TEMP_FILE_NAME = "user://temp.zip"
 @onready var _content: RichTextLabel = $Panel/GridContainer/PanelContainer2/ScrollContainer/MarginContainer/content
 @onready var _update_button: Button = $Panel/GridContainer/Panel/HBoxContainer/update
 
+var _latest_version: SemVer
 var _download_zip_url: String
 
 func _ready():
@@ -43,13 +44,19 @@ func _check_for_updater():
 	if response.code() != 200:
 		push_warning("Update information cannot be retrieved from GitHub! \n %s" % response.response())
 		return
-	var latest_version := extract_latest_version(response)
+	_latest_version = extract_latest_version(response)
 	var current_version := extract_current_version()
 
+	# if the current version is less than the skip version, skip the update
+	if "ignore_updates_before_version" in config:
+		var skip_version = SemVer.parse(config.ignore_updates_before_version)
+		if current_version.is_less_than(skip_version):
+			return
+
 	# if same version exit here no update need
-	if latest_version.is_greater(current_version):
+	if _latest_version.is_greater(current_version):
 		_download_zip_url = extract_zip_url(response)
-		_header.text = "Current version '%s'. A new version '%s' is available" % [current_version, latest_version]
+		_header.text = "Current version '%s'. A new version '%s' is available" % [current_version, _latest_version]
 		await show_update()
 
 func show_update() -> void:
@@ -126,9 +133,11 @@ func progress_bar(p_progress :int, p_color :Color = Color.POWDER_BLUE):
 func _colored(message :String, color :Color) -> String:
 	return "[color=#%s]%s[/color]" % [color.to_html(), message]
 
-func _on_disable_updates_toggled(toggled_on):
-	# TODO: Store a setting somewhere
-	pass
+func _skip_update():
+	# Store a setting in the config.
+	config.ignore_updates_before_version = str(_latest_version)
+	# Write the config into the addons dir so it gets removed on update
+	UpdaterConfig.save_user_config(config)
 
 func _on_update_pressed():
 	hide()
@@ -183,6 +192,8 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 
 func _on_close_pressed():
 	hide()
+	if $Panel/GridContainer/Panel/HBoxContainer/close.toggled:
+		_skip_update()
 
 func _on_content_meta_clicked(meta :String):
 	var properties = str_to_var(meta)

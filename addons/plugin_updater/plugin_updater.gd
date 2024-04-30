@@ -1,12 +1,12 @@
 @tool
 extends EditorPlugin
 
-const UpdaterConfig = preload("res://addons/plugin_updater/core/updater_config.gd")
 const DEBUG_MODE = false
-
+const UpdaterConfig = preload("res://addons/plugin_updater/core/updater_config.gd")
+	
 func _enter_tree():
-	var config = UpdaterConfig.get_repo_config()
-	_install_to_plugin(config.plugin_name)
+	UpdaterConfig.PLUGIN_NAME = "plugin_updater"
+	_install_to_plugin(UpdaterConfig.PLUGIN_NAME)
 
 	# Add auto-update functionality for plugin_updater itself (not the plugin being updated, that needs similar code)
 	if Engine.is_editor_hint():
@@ -45,6 +45,7 @@ func _install_to_plugin(plugin_name: String):
 
 	# Copy in plugin name so we can use relative paths
 	replace_string_in_file(target_path + "updater_config.gd", "PLUGIN_NAME_PLACEHOLDER", plugin_name)
+	replace_string_in_file(target_path + "updater_config.gd", "static var", "const")
 
 func _recursive_copy(from: String, to: String, chmod_flags: int = -1) -> Error:
 	var from_dir = DirAccess.open(from)
