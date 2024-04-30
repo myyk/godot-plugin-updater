@@ -9,10 +9,9 @@ func _enter_tree():
 	_install_to_plugin(UpdaterConfig.PLUGIN_NAME)
 
 	# Add auto-update functionality for plugin_updater itself (not the plugin being updated, that needs similar code)
-	if Engine.is_editor_hint():
-		Engine.set_meta("PluginUpdaterEditorPlugin", self)
-		var update_tool: Node = load("res://addons/plugin_updater/generated/updater/download_update_panel.tscn").instantiate()
-		Engine.get_main_loop().root.call_deferred("add_child", update_tool)
+	Engine.set_meta("PluginUpdaterEditorPlugin", self)
+	var update_tool: Node = load("res://addons/plugin_updater/generated/updater/download_update_panel.tscn").instantiate()
+	Engine.get_main_loop().root.call_deferred("add_child", update_tool)
 
 func _exit_tree():
 	if Engine.has_meta("PluginUpdaterEditorPlugin"):

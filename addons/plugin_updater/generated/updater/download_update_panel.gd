@@ -47,10 +47,10 @@ func _check_for_updater():
 	_latest_version = extract_latest_version(response)
 	var current_version := extract_current_version()
 
-	# if the current version is less than the skip version, skip the update
+	# if the current version is less than or equal to the skip version, skip the update
 	if "ignore_updates_before_version" in config:
 		var skip_version = SemVer.parse(config.ignore_updates_before_version)
-		if current_version.is_less_than(skip_version):
+		if current_version.is_less_than(skip_version) or current_version.equals(skip_version):
 			return
 
 	# if same version exit here no update need
