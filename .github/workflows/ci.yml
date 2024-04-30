@@ -1,0 +1,39 @@
+name: ci
+run-name: ${{ github.head_ref || github.ref_name }}-ci
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**.yml'
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  unit-test:
+    name: "CI Unit Test"
+    runs-on: 'ubuntu-22.04'
+    timeout-minutes: 10 # The overall timeout
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      pull-requests: write
+      statuses: write
+
+    steps:
+      # checkout your repository
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      # run tests by using the gdUnit4-action with Godot and the latest GdUnit4 release 
+      - uses: MikeSchulze/gdUnit4-action@v1.0.2
+        with:
+          godot-version: '4.2.1'
+          paths: |
+            res://test/
+          timeout: 5
+          report-name: test_report.xml      
