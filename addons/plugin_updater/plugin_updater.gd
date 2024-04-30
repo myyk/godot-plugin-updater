@@ -9,10 +9,9 @@ func _enter_tree():
 	_install_to_plugin(UpdaterConfig.PLUGIN_NAME)
 
 	# Add auto-update functionality for plugin_updater itself (not the plugin being updated, that needs similar code)
-	if Engine.is_editor_hint():
-		Engine.set_meta("PluginUpdaterEditorPlugin", self)
-		var update_tool: Node = load("res://addons/plugin_updater/generated/updater/download_update_panel.tscn").instantiate()
-		Engine.get_main_loop().root.call_deferred("add_child", update_tool)
+	Engine.set_meta("PluginUpdaterEditorPlugin", self)
+	var update_tool: Node = load("res://addons/plugin_updater/generated/updater/download_update_panel.tscn").instantiate()
+	Engine.get_main_loop().root.call_deferred("add_child", update_tool)
 
 func _exit_tree():
 	if Engine.has_meta("PluginUpdaterEditorPlugin"):
@@ -38,10 +37,11 @@ func _install_to_plugin(plugin_name: String):
 	if err != OK:
 		push_error("plugin_updater: error copying files, error = " + str(err))
 
-	# Copy the config over
-	err = DirAccess.copy_absolute(UpdaterConfig.PLUGIN_MAKER_CONFIG_PATH, UpdaterConfig.PLUGIN_USER_CONFIG_PATH_FORMAT % plugin_name)
-	if err != OK:
-		push_error("plugin_updater: error copying config file, error = " + str(err))
+	# Copy the config over if it matches the plugin_name
+	if UpdaterConfig.get_repo_config().plugin_name == plugin_name:
+		err = DirAccess.copy_absolute(UpdaterConfig.PLUGIN_MAKER_CONFIG_PATH, UpdaterConfig.PLUGIN_USER_CONFIG_PATH_FORMAT % plugin_name)
+		if err != OK:
+			push_error("plugin_updater: error copying config file, error = " + str(err))
 
 	# Copy in plugin name so we can use relative paths
 	replace_string_in_file(target_path + "updater_config.gd", "PLUGIN_NAME_PLACEHOLDER", plugin_name)
