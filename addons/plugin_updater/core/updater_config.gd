@@ -8,7 +8,7 @@ extends RefCounted
 ##		"editor_plugin_meta": "PluginUpdaterEditorPlugin"
 ##	}
 
-const PLUGIN_NAME: String = "PLUGIN_NAME_PLACEHOLDER" # This is replaced when code is generated
+static var PLUGIN_NAME: String = "PLUGIN_NAME_PLACEHOLDER" # This is replaced when code is generated
 const PLUGIN_MAKER_CONFIG_PATH = "res://plugin-updater.json"
 const PLUGIN_USER_CONFIG_PATH_FORMAT = "res://addons/%s/generated/updater/plugin-updater.json"
 
