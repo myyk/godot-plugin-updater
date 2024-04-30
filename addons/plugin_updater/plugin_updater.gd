@@ -37,10 +37,11 @@ func _install_to_plugin(plugin_name: String):
 	if err != OK:
 		push_error("plugin_updater: error copying files, error = " + str(err))
 
-	# Copy the config over
-	err = DirAccess.copy_absolute(UpdaterConfig.PLUGIN_MAKER_CONFIG_PATH, UpdaterConfig.PLUGIN_USER_CONFIG_PATH_FORMAT % plugin_name)
-	if err != OK:
-		push_error("plugin_updater: error copying config file, error = " + str(err))
+	# Copy the config over if it matches the plugin_name
+	if UpdaterConfig.get_repo_config().plugin_name == plugin_name:
+		err = DirAccess.copy_absolute(UpdaterConfig.PLUGIN_MAKER_CONFIG_PATH, UpdaterConfig.PLUGIN_USER_CONFIG_PATH_FORMAT % plugin_name)
+		if err != OK:
+			push_error("plugin_updater: error copying config file, error = " + str(err))
 
 	# Copy in plugin name so we can use relative paths
 	replace_string_in_file(target_path + "updater_config.gd", "PLUGIN_NAME_PLACEHOLDER", plugin_name)
