@@ -2,19 +2,7 @@
 * text=auto eol=lf
 
 # Only include the addons folder when downloading from the Asset Library.
-.gdlintrc            export-ignore
-.gitattributes       export-ignore
-.github/             export-ignore
-.gitignore           export-ignore
-.runsettings         export-ignore
-.runsettings-ci      export-ignore
-LICENSE              export-ignore
-README.md            export-ignore
-icon.jpg             export-ignore
-icon.jpg.import      export-ignore
-plugin-updater.json  export-ignore
-project.godot        export-ignore
-scripts/             export-ignore
-test/                export-ignore
-
-addons/gdUnit4       export-ignore
+/**                         export-ignore
+/addons                     !export-ignore
+/addons/plugin_updater      !export-ignore
+/addons/plugin_updater/**   !export-ignore
