@@ -20,6 +20,7 @@ Having no obligation to make everyone happy, this tool was made to solve the pai
 * Shows the release diff in the editor if there's an update available.
 * godot-plugin-updater can easily be updated in the editor through itself.
 * Uses semantic versioning.
+* Allows users of your plugins to skip an update.
 
 ## How does it work?
 
@@ -113,6 +114,8 @@ Optional, Type: Float, Default: 5
 
 * Your project is in a public Github repo.
 
+* Your plugin is located in `/assets/<plugin_name>/` in your repo.
+
 * You use Semantic Versioning tags like: v1.2.3.
 
 * Godot Plugin Updater **requires at least Godot 4.0**.
@@ -122,8 +125,6 @@ Optional, Type: Float, Default: 5
 * It would be nice to have a nicer looking UI.
 
 * Automated testing, this wasn't easy to test with all the projects involved.
-
-* Allow users to pausing updates.
 
 * Please add suggestions as Issues and solutions as Pull Requests!
 
